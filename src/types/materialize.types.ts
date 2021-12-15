@@ -1,0 +1,3 @@
+export type Color = 'red' | 'pink' | 'purple' | 'deep-purple' | 'indigo' | 'blue' | 'light-blue' | 'cyan' | 'teal' | 'green' | 'light-green' | 'lime' | 'yellow' | 'amber' | 'orange' | 'deep-orange' | 'brown' | 'grey' | 'black' | 'white' | 'transparent';
+export type Modifier = 'lighten-5' | 'lighten-4' | 'lighten-3' | 'lighten-2' | 'lighten-1' | '' | 'darken-1' | 'darken-2' | 'darken-3' | 'darken-4' | 'accent-1' | 'accent-2' | 'accent-3' | 'accent-4' | undefined;
+export type CssColorClass = `${Color} ${Modifier}`;

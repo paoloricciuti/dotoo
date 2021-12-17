@@ -1,15 +1,10 @@
 <script>
     import FAB from "../components/FAB.svelte";
-    import theme from "../stores/themestore";
     import todos from "../stores/todostore";
 
     let menuOpen = false;
 
     const toggleMenu = () => (menuOpen = !menuOpen);
-
-    const toggleTheme = () => {
-        $theme = $theme === "light" ? "dark" : "light";
-    };
 </script>
 
 <div class="container">
@@ -24,7 +19,7 @@
     open={menuOpen}
     on:click={toggleMenu}
     icon="more_vert"
-    openVelocity={150}
+    openVelocity={50}
     buttons={[
         {
             color: "indigo lighten-1",

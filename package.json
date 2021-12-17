@@ -12,11 +12,12 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "prepare": "npm run smui-theme-light && npm run smui-theme-dark",
-    "smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
+    "smui-theme-light": "smui-theme compile static/smui-light.css -i src/theme",
     "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
   },
   "devDependencies": {
     "@smui/fab": "^6.0.0-beta.7",
+    "@smui/icon-button": "^6.0.0-beta.9",
     "@smui/top-app-bar": "^6.0.0-beta.8",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/adapter-netlify": "^1.0.0-next.36",

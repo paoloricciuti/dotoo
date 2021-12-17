@@ -4,8 +4,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color .3s;
 }
-
+html,
 body{
+    height: 100%;
     font-family: 'Open Sans', sans-serif;
+}
+#svelte{
+    height: 100%;
 }

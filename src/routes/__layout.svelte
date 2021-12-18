@@ -7,5 +7,4 @@
     <link rel="stylesheet" href={`/smui-${$theme}.css`} />
 </svelte:head>
 <Nav />
-{$theme}
 <slot />

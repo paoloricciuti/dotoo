@@ -1,20 +1,39 @@
 <script>
+    import AddTodoDialog from "../components/AddTodoDialog.svelte";
+
     import FAB from "../components/FAB.svelte";
     import todos from "../stores/todostore";
 
     let menuOpen = false;
+    let addTodoOpen = false;
 
     const toggleMenu = () => (menuOpen = !menuOpen);
 </script>
 
 <div class="container">
     {#each $todos as todo}
-        <div />
+        <div>{todo.title}</div>
     {:else}
         <span>No todo lists yet...</span>
     {/each}
 </div>
-
+<AddTodoDialog
+    open={addTodoOpen}
+    on:cancel={() => {
+        addTodoOpen = false;
+    }}
+    on:ok={({ detail: listName }) => {
+        addTodoOpen = false;
+        $todos = [
+            ...$todos,
+            {
+                title: listName,
+                color: "hsl(200,50%,70%)",
+                todos: [],
+            },
+        ];
+    }}
+/>
 <FAB
     open={menuOpen}
     on:click={toggleMenu}
@@ -39,7 +58,7 @@
             color: "indigo lighten-1",
             icon: "add",
             action: () => {
-                console.log("Hey");
+                addTodoOpen = true;
             },
         },
     ]}

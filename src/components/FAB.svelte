@@ -1,7 +1,8 @@
 <script lang="ts">
-    import Fab, { Icon } from "@smui/fab";
     import type { FABButtons } from "src/types/FAB.types";
+    import { Button } from "attractions";
     import { createEventDispatcher } from "svelte";
+    import Icon from "./Icon.svelte";
 
     const dispatch = createEventDispatcher();
     export let icon: string;
@@ -26,23 +27,15 @@
 </script>
 
 <div class="fab-wrapper">
-    <Fab color="primary" on:click={onClick}>
-        <Icon class="material-icons">{icon}</Icon>
-    </Fab>
+    <Button on:click={onClick} filled round><Icon {icon} /></Button>
     {#if buttons?.length}
         <div class="buttons-wrapper" class:open>
             <ul>
                 {#each buttons as button, i}
-                    <li>
-                        <Fab
-                            color="secondary"
-                            mini
-                            touch
-                            exited={!buttonsOpen[i]}
-                            on:click={button.action}
-                        >
-                            <Icon class="material-icons">{button.icon}</Icon>
-                        </Fab>
+                    <li class={`sub-btn ${buttonsOpen[i] ? "open" : ""}`}>
+                        <Button outline round small on:click={button.action}>
+                            <Icon icon={button.icon} />
+                        </Button>
                     </li>
                 {/each}
             </ul>
@@ -70,9 +63,17 @@
         list-style: none;
         margin: 0;
         padding: 0;
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
     }
-    ul > * + * {
-        margin-top: 1rem;
+
+    .sub-btn {
+        transform: scale(0);
+        transition: transform 250ms;
+    }
+    .sub-btn.open {
+        transform: scale(1);
     }
 </style>

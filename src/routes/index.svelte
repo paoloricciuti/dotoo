@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import AddTodoDialog from "../components/AddTodoDialog.svelte";
 
     import FAB from "../components/FAB.svelte";
@@ -41,21 +41,24 @@
     openVelocity={50}
     buttons={[
         {
-            color: "indigo lighten-1",
+            icon: "local_cafe",
+            action: () => {
+                window.open("https://www.buymeacoffee.com/pablopang", "_blank");
+            },
+        },
+        {
             icon: "file_upload",
             action: () => {
                 console.log("Hey");
             },
         },
         {
-            color: "indigo lighten-1",
             icon: "file_download",
             action: () => {
                 console.log("Hey");
             },
         },
         {
-            color: "indigo lighten-1",
             icon: "add",
             action: () => {
                 addTodoOpen = true;

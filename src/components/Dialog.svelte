@@ -36,6 +36,7 @@
         pointer-events: none;
         transition: transform 250ms;
         border-radius: theme.$dialog-radius;
+        z-index: 999;
     }
     .dialog-wrapper.open {
         transform: translate(-50%, -50%) scale(1);

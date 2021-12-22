@@ -13,9 +13,11 @@
     const toggleMenu = () => (menuOpen = !menuOpen);
 </script>
 
-<TodoLists>
+<TodoLists maxLenght={$todos.length - 1} let:observer>
     {#each $todos as todo}
-        <TodoCard>{todo.title}</TodoCard>
+        {#if observer}
+            <TodoCard {observer}>{todo.title}</TodoCard>
+        {/if}
     {:else}
         <span>No todo lists yet...</span>
     {/each}
@@ -27,6 +29,7 @@
     }}
     on:ok={({ detail: listName }) => {
         addTodoOpen = false;
+        menuOpen = false;
         $todos = [
             ...$todos,
             {

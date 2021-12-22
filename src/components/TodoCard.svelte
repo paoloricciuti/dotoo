@@ -1,4 +1,14 @@
-<article>
+<script lang="ts">
+    export let observer: IntersectionObserver;
+    let card;
+    $: {
+        if (card) {
+            observer?.observe(card);
+        }
+    }
+</script>
+
+<article bind:this={card}>
     <slot />
 </article>
 

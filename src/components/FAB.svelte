@@ -43,7 +43,8 @@
     {/if}
 </div>
 
-<style>
+<style lang="scss">
+    @use "theme.scss";
     .fab-wrapper {
         position: fixed;
         bottom: 1rem;
@@ -72,6 +73,8 @@
     .sub-btn {
         transform: scale(0);
         transition: transform 250ms;
+        background: theme.$main-text;
+        border-radius: theme.$button-radius;
     }
     .sub-btn.open {
         transform: scale(1);

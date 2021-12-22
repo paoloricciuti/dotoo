@@ -1,8 +1,11 @@
 <script lang="ts">
+    import TodoLists from "../components/TodoLists.svelte";
+
     import AddTodoDialog from "../components/AddTodoDialog.svelte";
 
     import FAB from "../components/FAB.svelte";
     import todos from "../stores/todostore";
+    import TodoCard from "../components/TodoCard.svelte";
 
     let menuOpen = false;
     let addTodoOpen = false;
@@ -10,13 +13,13 @@
     const toggleMenu = () => (menuOpen = !menuOpen);
 </script>
 
-<div class="container">
+<TodoLists>
     {#each $todos as todo}
-        <div>{todo.title}</div>
+        <TodoCard>{todo.title}</TodoCard>
     {:else}
         <span>No todo lists yet...</span>
     {/each}
-</div>
+</TodoLists>
 <AddTodoDialog
     open={addTodoOpen}
     on:cancel={() => {

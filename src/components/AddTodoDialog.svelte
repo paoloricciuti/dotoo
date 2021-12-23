@@ -24,35 +24,35 @@
     {open}
     title="Add list"
 >
-    <div>
-        <TextField
-            error={error && "List name can't be void"}
-            outline
-            bind:value={todoListName}
-            on:input={() => {
-                error = false;
-            }}
-            label="List Name"
-        />
-    </div>
-    <div class="actions">
-        <Button filled small on:click={handleClose("cancel")}>
-            <div>Cancel</div>
-        </Button>
-        <Button
-            filled
-            small
-            on:click={() => {
-                if (!todoListName) {
-                    error = true;
-                    return;
-                }
-                handleClose("ok")();
-            }}
-        >
-            <div>Add</div>
-        </Button>
-    </div>
+    <form
+        on:submit|preventDefault={() => {
+            if (!todoListName) {
+                error = true;
+                return;
+            }
+            handleClose("ok")();
+        }}
+    >
+        <div>
+            <TextField
+                error={error && "List name can't be void"}
+                outline
+                bind:value={todoListName}
+                on:input={() => {
+                    error = false;
+                }}
+                label="List Name"
+            />
+        </div>
+        <div class="actions">
+            <Button type="button" filled small on:click={handleClose("cancel")}>
+                <div>Cancel</div>
+            </Button>
+            <Button type="submit" filled small>
+                <div>Add</div>
+            </Button>
+        </div>
+    </form>
 </Dialog>
 
 <style lang="scss">

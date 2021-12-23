@@ -4,6 +4,7 @@
     import TodoLists from "../components/TodoLists.svelte";
     import todos from "../stores/todostore";
     import { nanoid } from "nanoid";
+    import Icon from "../components/Icon.svelte";
 
     let menuOpen = false;
     let addTodoOpen = false;
@@ -11,7 +12,14 @@
     const toggleMenu = () => (menuOpen = !menuOpen);
 </script>
 
-<TodoLists />
+{#if $todos.length > 0}
+    <TodoLists />
+{:else}
+    <main>
+        <Icon size="25vmin" icon="sentiment_very_dissatisfied" />
+        No todo list yet...
+    </main>
+{/if}
 <AddTodoDialog
     open={addTodoOpen}
     on:cancel={() => {
@@ -63,3 +71,14 @@
         },
     ]}
 />
+
+<style lang="scss">
+    main {
+        display: grid;
+        grid-template-rows: min-content min-content;
+        place-content: center;
+        place-items: center;
+        color: #999;
+        font-size: 4vmin;
+    }
+</style>

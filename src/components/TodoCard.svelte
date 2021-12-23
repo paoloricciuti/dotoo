@@ -15,6 +15,22 @@
         (a, b) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
     );
+    const setAllTodosTo = (value: boolean) => () => {
+        $todos = [
+            ...$todos.filter((elem) => elem.id !== todoList.id),
+            {
+                ...todoList,
+                todos: todoList.todos.map((elem) => ({
+                    ...elem,
+                    completed: value,
+                })),
+            },
+        ];
+    };
+
+    const deleteList = () => {
+        $todos = [...$todos.filter((elem) => elem.id !== todoList.id)];
+    };
     const toggleTodo = (todoId: string) => {
         const currentTodo = todoList.todos.find((elem) => elem.id === todoId);
         $todos = [
@@ -32,6 +48,7 @@
         ];
     };
     const addTodo = () => {
+        if (todoToAdd === "") return;
         $todos = [
             ...$todos.filter((elem) => elem.id !== todoList.id),
             {
@@ -73,6 +90,21 @@
             {/each}
         </ul>
     </section>
+    <div class="actions">
+        <Button on:click={deleteList}
+            ><Icon icon="delete" /><span class="btn-text"> Delete</span></Button
+        >
+        <Button on:click={setAllTodosTo(true)}
+            ><Icon icon="check_box" /><span class="btn-text">
+                Finish all</span
+            ></Button
+        >
+        <Button on:click={setAllTodosTo(false)}
+            ><Icon icon="check_box_outline_blank" /><span class="btn-text">
+                Unfinish all</span
+            ></Button
+        >
+    </div>
 </article>
 
 <style lang="scss">
@@ -84,12 +116,14 @@
         border-radius: 0.5rem;
         scroll-snap-align: center;
         display: grid;
-        grid-template-rows: min-content min-content 1fr;
+        grid-template-rows: min-content 1fr min-content;
         grid-template-columns: max-content 1fr;
         padding: 0.5rem 1rem;
         position: relative;
+        overflow-y: auto;
         @media (max-width: 37.5rem) {
             grid-template-columns: 1fr;
+            grid-template-rows: min-content min-content 1fr min-content;
         }
     }
     h2 {
@@ -112,6 +146,7 @@
     section {
         grid-column: 1 / -1;
         padding: 1rem;
+        overflow-y: auto;
         ul {
             list-style: none;
             li {
@@ -137,6 +172,16 @@
             li.completed::after {
                 transform: translateY(-50%) scaleX(1);
                 transform-origin: left;
+            }
+        }
+    }
+    .actions {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: space-evenly;
+        @media (max-width: 37.5rem) {
+            .btn-text {
+                display: none;
             }
         }
     }

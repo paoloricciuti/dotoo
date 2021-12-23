@@ -11,9 +11,10 @@
                   const currentVisible = entries.find(
                       (entry) => entry.isIntersecting
                   )?.target;
-                  currentDisplayed = lists.findIndex(
+                  const index = lists.findIndex(
                       (todoCard) => todoCard?.getCard() === currentVisible
                   );
+                  currentDisplayed = index !== -1 ? index : currentDisplayed;
               },
               {
                   threshold: 1,
@@ -29,6 +30,10 @@
         }
     }
     $: maxLenght = $todos.length - 1;
+    $: orderedTodos = $todos.sort(
+        (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
     let currentDisplayed = 0;
 </script>
 
@@ -42,8 +47,8 @@
         >
     {/if}
     {#if observer}
-        {#each $todos as todo, id}
-            <TodoCard bind:this={lists[id]}>{todo.title}</TodoCard>
+        {#each orderedTodos as todo, id}
+            <TodoCard todoList={todo} bind:this={lists[id]} />
         {/each}
     {/if}
     {#if currentDisplayed < maxLenght}
@@ -84,6 +89,7 @@
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.2), transparent);
         outline: 0;
         border: 0;
+        z-index: 20;
     }
     .right {
         right: 0;

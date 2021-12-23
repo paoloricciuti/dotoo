@@ -3,6 +3,7 @@
     import FAB from "../components/FAB.svelte";
     import TodoLists from "../components/TodoLists.svelte";
     import todos from "../stores/todostore";
+    import { nanoid } from "nanoid";
 
     let menuOpen = false;
     let addTodoOpen = false;
@@ -22,9 +23,10 @@
         $todos = [
             ...$todos,
             {
+                id: nanoid(),
                 title: listName,
-                color: "hsl(200,50%,70%)",
                 todos: [],
+                createdAt: new Date(),
             },
         ];
     }}

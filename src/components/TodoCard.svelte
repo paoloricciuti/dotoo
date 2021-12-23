@@ -1,15 +1,82 @@
 <script lang="ts">
-    let card: HTMLElement;
+    import { Button, TextField } from "attractions";
+    import type { TodoList } from "src/types/todo.types";
+    import Icon from "./Icon.svelte";
+    import todos from "../stores/todostore";
+    import { nanoid } from "nanoid";
+
+    export let todoList: TodoList;
     export const getCard: () => HTMLElement = () => {
         return card;
+    };
+    let card: HTMLElement;
+    let todoToAdd = "";
+    $: todosToShow = todoList.todos.sort(
+        (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
+    const toggleTodo = (todoId: string) => {
+        const currentTodo = todoList.todos.find((elem) => elem.id === todoId);
+        $todos = [
+            ...$todos.filter((elem) => elem.id !== todoList.id),
+            {
+                ...todoList,
+                todos: [
+                    ...todoList.todos.filter((elem) => elem.id !== todoId),
+                    {
+                        ...currentTodo,
+                        completed: !currentTodo.completed,
+                    },
+                ],
+            },
+        ];
+    };
+    const addTodo = () => {
+        $todos = [
+            ...$todos.filter((elem) => elem.id !== todoList.id),
+            {
+                ...todoList,
+                todos: [
+                    ...todoList.todos,
+                    {
+                        id: nanoid(),
+                        content: todoToAdd,
+                        completed: false,
+                        createdAt: new Date(),
+                    },
+                ],
+            },
+        ];
+        todoToAdd = "";
     };
 </script>
 
 <article bind:this={card}>
-    <slot />
+    <h2>
+        {todoList.title}
+    </h2>
+    <form on:submit|preventDefault={addTodo}>
+        <TextField bind:value={todoToAdd} outline label="Add TODO" />
+        <div class="button-wrapper">
+            <Button type="submit" round><Icon icon="send" /></Button>
+        </div>
+    </form>
+    <section>
+        <ul>
+            {#each todosToShow as todo}
+                <li
+                    on:click={() => toggleTodo(todo.id)}
+                    class:completed={todo.completed}
+                >
+                    {todo.content}
+                </li>
+            {/each}
+        </ul>
+    </section>
 </article>
 
-<style>
+<style lang="scss">
+    @use "theme.scss";
     article {
         width: 100%;
         height: 100%;
@@ -17,6 +84,60 @@
         border-radius: 0.5rem;
         scroll-snap-align: center;
         display: grid;
-        place-items: center;
+        grid-template-rows: min-content min-content 1fr;
+        grid-template-columns: max-content 1fr;
+        padding: 0.5rem 1rem;
+        position: relative;
+        @media (max-width: 37.5rem) {
+            grid-template-columns: 1fr;
+        }
+    }
+    h2 {
+        background-color: theme.$main;
+        color: theme.$main-text;
+        padding: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        margin: -0.5rem 1rem 1rem -1rem;
+        place-self: start;
+        font-size: 0.7rem;
+    }
+    form {
+        position: relative;
+        .button-wrapper {
+            position: absolute;
+            top: 0.65em;
+            right: 0;
+        }
+    }
+    section {
+        grid-column: 1 / -1;
+        padding: 1rem;
+        ul {
+            list-style: none;
+            li {
+                position: relative;
+                user-select: none;
+                cursor: pointer;
+            }
+            li::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background-color: black;
+                transform: translateY(-50%) scaleX(0);
+                transition: transform 250ms;
+                transform-origin: right;
+            }
+            li.completed {
+                color: #aaa;
+            }
+            li.completed::after {
+                transform: translateY(-50%) scaleX(1);
+                transform-origin: left;
+            }
+        }
     }
 </style>

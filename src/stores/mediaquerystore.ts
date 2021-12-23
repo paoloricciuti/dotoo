@@ -8,7 +8,6 @@ if (browser) {
         const result = window.matchMedia(mediaQuery);
         const retval = writable(result.matches);
         result.addEventListener("change", (e) => {
-            console.log("changed");
             retval.update(() => e.matches);
         });
         return retval;

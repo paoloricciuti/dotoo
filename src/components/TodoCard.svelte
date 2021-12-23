@@ -85,7 +85,9 @@
                     on:click={() => toggleTodo(todo.id)}
                     class:completed={todo.completed}
                 >
-                    {todo.content}
+                    <span>
+                        {todo.content}
+                    </span>
                 </li>
             {/each}
         </ul>
@@ -153,25 +155,29 @@
                 position: relative;
                 user-select: none;
                 cursor: pointer;
+                margin: 0.5rem 0;
+                background: #01295f33;
+                padding: 0.3rem;
             }
-            li::after {
-                content: "";
-                position: absolute;
-                top: 50%;
-                left: 0;
-                width: 100%;
-                height: 2px;
-                background-color: black;
-                transform: translateY(-50%) scaleX(0);
-                transition: transform 250ms;
-                transform-origin: right;
+            li > span {
+                --height: 2px;
+                background-image: linear-gradient(
+                    90deg,
+                    black 100%,
+                    transparent 50%
+                );
+                background-size: 0% var(--height);
+                background-position: center;
+                background-position-x: right;
+                background-repeat: no-repeat;
+                transition: background-size 500ms;
             }
             li.completed {
-                color: #aaa;
+                opacity: 0.5;
             }
-            li.completed::after {
-                transform: translateY(-50%) scaleX(1);
-                transform-origin: left;
+            li.completed > span {
+                background-size: 100% var(--height);
+                background-position-x: left;
             }
         }
     }

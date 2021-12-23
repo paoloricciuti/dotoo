@@ -1,0 +1,17 @@
+{
+    "short_name": "DoToo",
+    "name": "DoToo",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "dotoo.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "background_color": "#01295f",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#01295f",
+    "description": "The best ToDoo app out there"
+}

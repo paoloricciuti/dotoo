@@ -1,49 +1,55 @@
 <script lang="ts">
     import { browser } from "$app/env";
-
+    import todos from "../stores/todostore";
     import Icon from "./Icon.svelte";
-    let main;
+    import TodoCard from "./TodoCard.svelte";
+
+    let lists: TodoCard[] = [];
     const observer = browser
         ? new IntersectionObserver(
               (entries: IntersectionObserverEntry[]) => {
                   const currentVisible = entries.find(
                       (entry) => entry.isIntersecting
                   )?.target;
-                  console.log(currentVisible);
-                  currentDisplayed = Array.from(
-                      currentVisible?.parentElement?.querySelectorAll?.(
-                          "article"
-                      )
-                  )?.findIndex?.((elem) => elem === currentVisible);
+                  currentDisplayed = lists.findIndex(
+                      (todoCard) => todoCard?.getCard() === currentVisible
+                  );
               },
               {
                   threshold: 1,
               }
           )
         : null;
-    export let maxLenght = 0;
+    $: {
+        for (let todoCard of lists) {
+            const element = todoCard?.getCard();
+            if (element) {
+                observer.observe(element);
+            }
+        }
+    }
+    $: maxLenght = $todos.length - 1;
     let currentDisplayed = 0;
 </script>
 
-<main bind:this={main}>
-    {currentDisplayed}
-    {#if currentDisplayed !== 0}
+<main>
+    {#if currentDisplayed > 0}
         <button
             on:click={() => {
-                main?.querySelector?.(
-                    `article:nth-of-type(${currentDisplayed})`
-                )?.scrollIntoView();
+                lists[currentDisplayed - 1].getCard().scrollIntoView();
             }}
             class="left"><Icon icon="keyboard_arrow_left" /></button
         >
     {/if}
-    <slot {observer} />
-    {#if currentDisplayed !== maxLenght}
+    {#if observer}
+        {#each $todos as todo, id}
+            <TodoCard bind:this={lists[id]}>{todo.title}</TodoCard>
+        {/each}
+    {/if}
+    {#if currentDisplayed < maxLenght}
         <button
             on:click={() => {
-                main?.querySelector?.(
-                    `article:nth-of-type(${currentDisplayed + 2})`
-                )?.scrollIntoView();
+                lists[currentDisplayed + 1].getCard().scrollIntoView();
             }}
             class="right"><Icon icon="keyboard_arrow_right" /></button
         >

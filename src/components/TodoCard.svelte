@@ -1,11 +1,8 @@
 <script lang="ts">
-    export let observer: IntersectionObserver;
-    let card;
-    $: {
-        if (card) {
-            observer?.observe(card);
-        }
-    }
+    let card: HTMLElement;
+    export const getCard: () => HTMLElement = () => {
+        return card;
+    };
 </script>
 
 <article bind:this={card}>

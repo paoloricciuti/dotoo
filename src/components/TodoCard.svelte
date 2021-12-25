@@ -31,6 +31,15 @@
     const deleteList = () => {
         $todos = [...$todos.filter((elem) => elem.id !== todoList.id)];
     };
+    const deleteTodo = (todoId: string) => {
+        $todos = [
+            ...$todos.filter((elem) => elem.id !== todoList.id),
+            {
+                ...todoList,
+                todos: [...todoList.todos.filter((elem) => elem.id !== todoId)],
+            },
+        ];
+    };
     const toggleTodo = (todoId: string) => {
         const currentTodo = todoList.todos.find((elem) => elem.id === todoId);
         $todos = [
@@ -88,6 +97,9 @@
                     <span>
                         {todo.content}
                     </span>
+                    <button on:click={() => deleteTodo(todo.id)}>
+                        <Icon icon="close" />
+                    </button>
                 </li>
             {/each}
         </ul>
@@ -158,6 +170,19 @@
                 margin: 0.5rem 0;
                 background: #01295f33;
                 padding: 0.3rem;
+                width: calc(100% - 24px);
+                button {
+                    border: 0;
+                    margin: 0;
+                    padding: 0;
+                    cursor: pointer;
+                    outline: 0;
+                    background: transparent;
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translate(100%, -50%);
+                }
             }
             li > span {
                 --height: 2px;

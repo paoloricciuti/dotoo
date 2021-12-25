@@ -1,5 +1,7 @@
 <script lang="ts">
-    export let icon: string;
+    import type { MaterialIcon } from "src/types/materialicons.types";
+
+    export let icon: MaterialIcon;
     export let size: string = "24px";
 </script>
 

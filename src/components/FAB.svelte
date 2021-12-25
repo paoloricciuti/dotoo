@@ -3,9 +3,10 @@
     import { Button } from "attractions";
     import { createEventDispatcher } from "svelte";
     import Icon from "./Icon.svelte";
+    import type { MaterialIcon } from "src/types/materialicons.types";
 
     const dispatch = createEventDispatcher();
-    export let icon: string;
+    export let icon: MaterialIcon;
     export let buttons: FABButtons[] | undefined = undefined;
     export let open: boolean = false;
     export let openVelocity: number = 50;

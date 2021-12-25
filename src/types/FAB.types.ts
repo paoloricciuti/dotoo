@@ -1,4 +1,6 @@
+import type { MaterialIcon } from "./materialicons.types";
+
 export interface FABButtons {
-    icon: string,
+    icon: MaterialIcon,
     action: () => void,
 }

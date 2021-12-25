@@ -97,7 +97,9 @@
                     <span>
                         {todo.content}
                     </span>
-                    <button on:click={() => deleteTodo(todo.id)}>
+                    <button
+                        on:click|stopPropagation={() => deleteTodo(todo.id)}
+                    >
                         <Icon icon="close" />
                     </button>
                 </li>

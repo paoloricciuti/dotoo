@@ -5,11 +5,26 @@
     import todos from "../stores/todostore";
     import { nanoid } from "nanoid";
     import Icon from "../components/Icon.svelte";
+    import { loadFile, saveFile } from "../utils/utils";
+    import type { TodoList } from "../types/todo.types";
 
     let menuOpen = false;
     let addTodoOpen = false;
 
     const toggleMenu = () => (menuOpen = !menuOpen);
+    const loadTodos = async () => {
+        try {
+            const toLoad = await loadFile();
+            const todosToLoad = JSON.parse(toLoad) as TodoList[];
+            const alreadyPresentIds: string[] = $todos.map((elem) => elem.id);
+            $todos = [
+                ...$todos,
+                ...todosToLoad.filter(
+                    (elem: TodoList) => !alreadyPresentIds.includes(elem.id)
+                ),
+            ];
+        } catch (e) {}
+    };
 </script>
 
 {#if $todos.length > 0}
@@ -53,14 +68,12 @@
         },
         {
             icon: "file_upload",
-            action: () => {
-                console.log("Hey");
-            },
+            action: loadTodos,
         },
         {
             icon: "file_download",
             action: () => {
-                console.log("Hey");
+                saveFile($todos);
             },
         },
         {

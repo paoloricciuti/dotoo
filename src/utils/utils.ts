@@ -3,6 +3,7 @@ import type { TodoList } from "src/types/todo.types";
 const loadFile: () => Promise<string> = () => new Promise((resolve, reject) => {
     const fileEl: HTMLInputElement = document.createElement("input");
     fileEl.type = "file";
+    fileEl.accept="application/json";
     fileEl.click();
     fileEl.addEventListener("change", (e) => {
         const reader = new FileReader();

@@ -8,16 +8,24 @@
     import { loadFile, saveFile } from "../utils/utils";
     import type { TodoList } from "../types/todo.types";
     import TypeDef from "runtime-type";
+    import { SnackbarContainer } from "attractions";
 
     let menuOpen = false;
     let addTodoOpen = false;
+    let snackbar;
+    const snackBarProps = {
+        props: {
+            text: "Error, the uploaded file is malformed.",
+        },
+        duration: 4000,
+    };
 
     const toggleMenu = () => (menuOpen = !menuOpen);
     const loadTodos = async () => {
         try {
             const toLoad = await loadFile();
             const todosToLoad = JSON.parse(toLoad) as TodoList[];
-            const Type = TypeDef.default;
+            const Type = TypeDef;
             const shape = Type.arrayOf(
                 Type.shape({
                     id: Type.string,
@@ -34,7 +42,7 @@
                 })
             );
             if (!shape.isValid(todosToLoad)) {
-                console.log("Shape not valid");
+                snackbar?.showSnackbar?.(snackBarProps);
                 return;
             }
             const alreadyPresentIds: string[] = $todos.map((elem) => elem.id);
@@ -45,7 +53,7 @@
                 ),
             ];
         } catch (e) {
-            console.log(e);
+            snackbar?.showSnackbar?.(snackBarProps);
         }
     };
 </script>
@@ -107,6 +115,7 @@
         },
     ]}
 />
+<SnackbarContainer bind:this={snackbar} />
 
 <style lang="scss">
     main {

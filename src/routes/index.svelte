@@ -17,7 +17,7 @@
         try {
             const toLoad = await loadFile();
             const todosToLoad = JSON.parse(toLoad) as TodoList[];
-            console.log("Stillin");
+            console.log(Type);
             const shape = Type.arrayOf(
                 Type.shape({
                     id: Type.string,

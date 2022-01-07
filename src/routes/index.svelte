@@ -25,7 +25,7 @@
         try {
             const toLoad = await loadFile();
             const todosToLoad = JSON.parse(toLoad) as TodoList[];
-            const Type = TypeDef;
+            const Type = (TypeDef as any).default ?? TypeDef;
             const shape = Type.arrayOf(
                 Type.shape({
                     id: Type.string,

@@ -7,7 +7,7 @@
     import Icon from "../components/Icon.svelte";
     import { loadFile, saveFile } from "../utils/utils";
     import type { TodoList } from "../types/todo.types";
-    import Type from "runtime-type";
+    import TypeDef from "runtime-type";
 
     let menuOpen = false;
     let addTodoOpen = false;
@@ -17,7 +17,7 @@
         try {
             const toLoad = await loadFile();
             const todosToLoad = JSON.parse(toLoad) as TodoList[];
-            console.log(Type);
+            const Type = TypeDef.default;
             const shape = Type.arrayOf(
                 Type.shape({
                     id: Type.string,

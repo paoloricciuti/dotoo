@@ -7,6 +7,7 @@
     import Icon from "../components/Icon.svelte";
     import { loadFile, saveFile } from "../utils/utils";
     import type { TodoList } from "../types/todo.types";
+    import Type from 'runtime-type';
 
     let menuOpen = false;
     let addTodoOpen = false;
@@ -16,6 +17,21 @@
         try {
             const toLoad = await loadFile();
             const todosToLoad = JSON.parse(toLoad) as TodoList[];
+            const shape = Type.arrayOf(Type.shape({
+                id: Type.string,
+                title: Type.string,
+                todos: Type.arrayOf(Type.shape({
+                    id: Type.string,
+                    content: Type.string,
+                    completed: Type.boolean,
+                    createdAt: Type.string,
+                })),
+                createdAt: Type.string,
+            }));
+            if(!shape.isValid(todosToLoad)){
+                console.log("Shape not valid");
+                return;
+            }
             const alreadyPresentIds: string[] = $todos.map((elem) => elem.id);
             $todos = [
                 ...$todos,

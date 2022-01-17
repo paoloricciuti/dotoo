@@ -35,9 +35,12 @@
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
     );
     let currentDisplayed = 0;
+    const changeScroll = (e: WheelEvent) => {
+        (e?.currentTarget as HTMLDivElement)?.scrollBy(e.deltaY, 0);
+    };
 </script>
 
-<main>
+<main on:wheel={changeScroll}>
     {#if currentDisplayed > 0}
         <button
             on:click={() => {

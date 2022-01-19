@@ -5,7 +5,7 @@
   "module": "dist/index.js",
   "svelte": "dist/index.js",
   "scripts": {
-    "dev": "volta run svelte-kit dev --port 5555 -o",
+    "dev": "svelte-kit dev --port 5555 -o",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",

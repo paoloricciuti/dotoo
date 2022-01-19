@@ -5,7 +5,7 @@
   "module": "dist/index.js",
   "svelte": "dist/index.js",
   "scripts": {
-    "dev": "svelte-kit dev",
+    "dev": "volta run svelte-kit dev --port 5555 -o",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
@@ -29,5 +29,8 @@
   "dependencies": {
     "nanoid": "^3.1.30",
     "runtime-type": "^4.0.4"
+  },
+  "volta": {
+    "node": "17.0.1"
   }
 }

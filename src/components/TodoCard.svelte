@@ -82,7 +82,12 @@
         {todoList.title}
     </h2>
     <form on:submit|preventDefault={addTodo}>
-        <TextField bind:value={todoToAdd} outline label="Add TODO" />
+        <TextField
+            style="padding-right: 2.9rem;"
+            bind:value={todoToAdd}
+            outline
+            label="Add TODO"
+        />
         <div class="button-wrapper">
             <Button type="submit" round><Icon icon="send" /></Button>
         </div>
@@ -169,6 +174,7 @@
                 position: relative;
                 user-select: none;
                 cursor: pointer;
+                border-radius: 0.5rem 1rem 0.3rem 0.5rem;
                 margin: 0.5rem 0;
                 background: #01295f33;
                 padding: 0.3rem;
